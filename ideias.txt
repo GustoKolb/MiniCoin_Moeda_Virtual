@@ -14,3 +14,22 @@ A blochchain não parece difícil. Parece uma lista encadeada em que não se ret
 - Testes a Rodo
 - Montar página HTML
 - Fazer relatório, de preferência com esquemas visuais e tals.
+
+Apontador rash para o bloco anterior
+apontador hash para a raiz da arvore de merkle do bloco
+nonce numero aleatorio
+timestamp
+dificuldade do alvo
+hash proprio
+altura na corrente, começando em 0
+
+checar hash do bloco
+tamanho aceito pela rede
+conjunto de transações válido
+coinbase transaction
+
+
+
+
+
+
