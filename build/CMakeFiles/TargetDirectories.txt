@@ -1,0 +1,6 @@
+/home/dioni/codes/ufpr/20252/redes2/MiniCoin_Moeda_Virtual/build/CMakeFiles/miniCoin.dir
+/home/dioni/codes/ufpr/20252/redes2/MiniCoin_Moeda_Virtual/build/CMakeFiles/edit_cache.dir
+/home/dioni/codes/ufpr/20252/redes2/MiniCoin_Moeda_Virtual/build/CMakeFiles/rebuild_cache.dir
+/home/dioni/codes/ufpr/20252/redes2/MiniCoin_Moeda_Virtual/build/test/CMakeFiles/miniCoin_test.dir
+/home/dioni/codes/ufpr/20252/redes2/MiniCoin_Moeda_Virtual/build/test/CMakeFiles/edit_cache.dir
+/home/dioni/codes/ufpr/20252/redes2/MiniCoin_Moeda_Virtual/build/test/CMakeFiles/rebuild_cache.dir
