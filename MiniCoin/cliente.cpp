@@ -4,7 +4,7 @@
 int main() {
     ix::WebSocket ws;
     ws.setUrl("ws://127.0.0.1:5555/ws");
-    std::cout << "Cliente inicializado" << std::endl;
+    cout << "Cliente inicializado" << std::endl;
     
     ws.setOnMessageCallback([](const ix::WebSocketMessagePtr& msg) {
         if (msg->type == ix::WebSocketMessageType::Open)
@@ -14,6 +14,7 @@ int main() {
     });
 
     ws.start();
+
 
     std::string name;
     long value;
@@ -27,6 +28,7 @@ int main() {
     while(true){
         ws.sendText("Olá servidor!");
     }
+
 
     std::cin.get();
     ws.stop();
