@@ -1,1 +1,0 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/miniCoin_test.dir/link.d CMakeFiles/miniCoin_test.dir/test_main.cc.o -o miniCoin_test  /usr/local/lib64/libdrogon.a /usr/local/lib64/libtrantor.a -lpthread -ldl /usr/lib64/libjsoncpp.so /lib64/libossp-uuid.so /usr/lib64/libz.so
