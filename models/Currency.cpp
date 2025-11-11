@@ -6,19 +6,24 @@
 #include <iomanip>
 #include <sstream>
 
-Currency::Currency(long number, unsigned short decimal)
-    : number(number), decimal(decimal) {}
+Currency::Currency(double number) {
+
+    double scaled = number * std::pow(10, DEFAULT_DECIMAL);
+    double rounded = std::round(scaled);
+
+    if (std::fabs(scaled - rounded) > 1e-6) {
+        std::ostringstream oss;
+        oss << "Erro: número com mais de " << DEFAULT_DECIMAL
+        << " casas decimais: " << number;
+        throw std::runtime_error(oss.str());
+    }
+
+    this->number = static_cast<long>(rounded);
+   
+}
 
 //------------------------------------------------------------     
-std::string Currency::getCurrency() const {
-    long factor = 1;
-    for (int i = 0; i < this->decimal; ++i)
-        factor *= 10;
+double Currency::getCurrency() const {
 
-    long intPart = this->number / factor;
-    long decimalPart = std::abs(this->number % factor);
-
-    std::ostringstream oss;
-    oss << intPart << "," << std::setw(this->decimal) << std::setfill('0') << decimalPart;
-    return oss.str();
+    return double(this->number / pow(10, DEFAULT_DECIMAL));
 }

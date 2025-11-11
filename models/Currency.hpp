@@ -7,10 +7,10 @@ class Currency {
     public:
 
         static constexpr unsigned short DEFAULT_DECIMAL = 2;
-        Currency() : number{0}, decimal {DEFAULT_DECIMAL} {}//pronto
-        Currency(long number, unsigned short decimal);//a escolher
+        Currency() : number{0} {}
+        Currency(double number);//a escolher
         Currency(const Currency& other): //Cópia
-        number{other.number}, decimal{other.decimal} {}
+        number{other.number} {}
         
         Currency& operator=(const Currency& other) {
 
@@ -23,8 +23,7 @@ class Currency {
 
 
         long number;
-        const unsigned short decimal;
-        std::string getCurrency() const;
+        double getCurrency() const;
 };
 
 

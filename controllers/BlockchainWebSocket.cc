@@ -1,70 +1,76 @@
 // EchoWebsock.cc
 #include "BlockchainWebSocket.h"
 #include "models/BlockChain.hpp"
+#include "Message.hpp"
+#include <iostream>
+#include "models/utils.hpp"
 
-bool isNumber(const std::string str)
-{
-    try
-    {
-        std::size_t i;
-        std::stod(str, &i);
-        return i == str.size();
+void handleDeposit(const Message &msg) {
+    try {
+        Currency value(std::stod(msg.getValue()));
+        BlockChain::get().depositValue(value);
+        //Falta fazer o Log 
+        std::cout  << "[" << currentTime() << "]" << "[SERVER] " <<  " Novo depósito efetuado por cliente " << msg.getName() << " de valor " << value.number << std::endl ;
+    } catch(const std::exception& e) {
+        std::cerr << e.what() << std::endl;
     }
-    catch (...)
-    {
-        return false;
+}
+
+//------------------------------------------------------------
+void handleWithdraw(const Message &msg) {
+    try {
+        Currency value(std::stod(msg.getValue()));
+        bool check = BlockChain::get().withdrawValue(value);
+        if(check)
+            std::cout  << "[" << currentTime() << "]" << "[SERVER]" << " Nova retirada efetuada por cliente " << msg.getName() << " de valor " << value.number << std::endl ;
+        else
+            std::cout  << "[" << currentTime() << "]" << "[SERVER]" << "[ERROR]" << " Falha em retirada por cliente " << msg.getName() << " de valor " << value.number << std::endl ;
+        //Falta fazer o Log 
+        
+    } catch(const std::exception& e) {
+        std::cerr << e.what() << std::endl;
     }
 }
 
-bool checkMessageIsValid(const std::string message, const std::string prefix)
-{
-    const auto rest = message.substr(prefix.length());
-    if (!isNumber(rest))
-        return false;
+//------------------------------------------------------------
+void handleInit(const Message &msg) {
+    try {
+        Currency value(std::stod(msg.getValue()));
+        BlockChain::init(msg.getName(), value);
+        std::cout  << "[" << currentTime() << "]" << "[SERVER]" << "Nova blockchain criada, cliente: " << msg.getName() << std::endl;
+        //Pseudo-log 
+    } catch(const std::exception& e) {
+        std::cerr << e.what() << std::endl;
+    }
 }
 
-double getValue(const std::string message, const std::string prefix)
-{
-    const auto rest = message.substr(prefix.length());
-
-    const auto value = std::stod(rest);
-
-    auto withdrawal = new Currency(value);
-}
-
+//------------------------------------------------------------
 void BlockchainWebSocket::handleNewMessage(const WebSocketConnectionPtr &wsConnPtr, std::string &&message, const WebSocketMessageType &type)
 {
-    // write your application logic here
-    if (message.starts_with("deposit") && checkMessageIsValid(message, "deposit"))
-    {
-        const auto value = getValue(message, "deposit");
 
-        auto deposit = new Currency(value);
-        // BlockChain::depositValue(deposit);
-    }
-    else if (message.starts_with("withdraw") && checkMessageIsValid(message, "withdraw"))
-    {
-        /* code */
-
-        const auto value = getValue(message, "withdraw");
-
-        auto withdrawal = new Currency(value);
-
-        // BlockChain::CheckWithdrawal(withdrawal);
-    }
-    else
-    {
-        wsConnPtr->send("Mensagem Inválida");
-        /* code */
-    }
+    try {
+        Message msg(message);
+        switch(msg.getType()) {
+            case Type::DEPOSIT: handleDeposit(msg); break;
+            case Type::WITHDRAW: handleWithdraw(msg); break;
+            case Type::INIT: handleInit(msg); break;
+            default: std::cout  << "[" << currentTime() << "]" << "[SERVER]" << "[ERROR]" << " Tipo de Mensagem Desconhecida" << std::endl;
+        }
+    } catch (const std::exception& e) {}//Deixei sem tratamento pq se vier algo diferente n importa
 }
+//------------------------------------------------------------
 void BlockchainWebSocket::handleNewConnection(const HttpRequestPtr &req, const WebSocketConnectionPtr &wsConnPtr)
 {
-    // Mudar para static blockchain
-    // Fazer check de se lista ja existe
-    //  write your application logic here
+    std::cout  << "[" << currentTime() << "]" << "[SERVER] " << "Cliente conectado!" << std::endl;
+    //Ver o que dá pra fazer aqui
 }
+//------------------------------------------------------------
 void BlockchainWebSocket::handleConnectionClosed(const WebSocketConnectionPtr &wsConnPtr)
 {
-    // write your application logic here
+    std::cout  << "[" << currentTime() << "]" << "[SERVER] " << "Cliente desconectado!" << std::endl;
+    //Aqui também, talvez guardar os logs num arquivo? n sei
 }
+
+//------------------------------------------------------------
+
+

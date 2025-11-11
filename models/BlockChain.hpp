@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <ctime>
+#include <memory>
 
 
 //------------------------------------------------------------
@@ -25,16 +26,24 @@ struct FirstBlock {
 };
  
 //------------------------------------------------------------
-class BlockChain {
+class BlockChain {//Singleton
 
     public:
-        BlockChain(std::string name, Currency value);
+        //Evitar cópia
+        BlockChain(const BlockChain&) = delete;
+        BlockChain& operator=(const BlockChain&) = delete;
+        static void init( std::string name, Currency value);
+        static BlockChain& get();
         ~BlockChain();
         void depositValue(Currency value);
-        void withdrawValue(Currency value);
+        bool withdrawValue(Currency value);
         void printChain();
+        std::string getName();
+        
     
     private:
+        static std::unique_ptr<BlockChain> instance;
+        BlockChain(std::string name, Currency value);
         FirstBlock* head;
         Block* createBlock(Currency value); 
         bool checkWithdrawal(Currency value); 

@@ -1,8 +1,28 @@
 #include <iostream>
 #include "BlockChain.hpp"
+std::unique_ptr<BlockChain> BlockChain::instance = nullptr;
+//------------------------------------------------------------
+void BlockChain::init(std::string name,Currency value){
+    if (instance) {
+        throw std::runtime_error("A BlockChain já foi inicializada");
+    }
+    instance = std::unique_ptr<BlockChain>(new BlockChain(name, value));
+}
+//------------------------------------------------------------
+BlockChain& BlockChain::get() {
+    
+    if (!instance)
+            throw std::runtime_error("BlockChain não inicializada!");
+    return *instance;
+}
+//------------------------------------------------------------
 
 BlockChain::BlockChain(std::string name,Currency value) {
 
+    if (value.number < 0) {
+        throw std::invalid_argument("Valor Inicial Negativo");
+        return;
+    }
     //Cria Primeiro Block e o Hash de cada parte dele
     this->head = new FirstBlock;
     this->head->name = name;
@@ -11,7 +31,7 @@ BlockChain::BlockChain(std::string name,Currency value) {
     this->head->datetime = *localtime(&timestamp);
 
     size_t hashName = std::hash<std::string>{}(this->head->name);
-    size_t hashValue = createCurrencyHash(&this->head->value);
+    size_t hashValue = std::hash<long>{}(this->head->value.number);
     size_t hashTime = 0;
     hashTime = combineHash(hashTime, std::hash<int>{}(this->head->datetime.tm_sec));
     hashTime = combineHash(hashTime, std::hash<int>{}(this->head->datetime.tm_min));
@@ -45,7 +65,7 @@ Block* BlockChain::createBlock(Currency value) {
     Block* newBlock = new Block();
     newBlock->value = value;
     newBlock->next = nullptr;
-    newBlock->hash = combineHash(olderHash, createCurrencyHash(&value));
+    newBlock->hash = combineHash(olderHash, std::hash<long>{}(newBlock->value.number));
 
     if (!this->head->next) {
         this->head->next = newBlock;
@@ -56,7 +76,10 @@ Block* BlockChain::createBlock(Currency value) {
 }
 
 //------------------------------------------------------------
-
+std::string BlockChain::getName() {
+    return this->head->name;
+}
+//------------------------------------------------------------
 bool BlockChain::checkWithdrawal(Currency value){
 
     Currency account_value;
@@ -65,7 +88,6 @@ bool BlockChain::checkWithdrawal(Currency value){
 
     while (aux != nullptr) {
         account_value.number += aux->value.number;
-        //calcular o hash aqui
         aux = aux->next;
     }
     if (account_value.number < value.number) 
@@ -86,17 +108,18 @@ void BlockChain::depositValue(Currency value){
 
 
 //------------------------------------------------------------     
-void BlockChain::withdrawValue(Currency value){
+bool BlockChain::withdrawValue(Currency value){
 
     if (value.number <= 0){
         throw std::invalid_argument("Valor depositado não Positivo");
-        return;
+        return false;
     }
     if (checkWithdrawal(value)) {
         value.number = -value.number;
         createBlock(value);
-    }
-    return;
+        return true;
+    }     
+    return false;
 }
 
 //------------------------------------------------------------     
@@ -123,13 +146,6 @@ size_t BlockChain::combineHash(size_t h1, size_t h2) {
     return h1 ^ (h2 + 0x9e3779b9 + (h1 << 6) + (h1 >> 2));
 }
        
-//------------------------------------------------------------     
-size_t BlockChain::createCurrencyHash(Currency* value){
-    
-    size_t hashLong = std::hash<long> {}(value->number);
-    size_t hashShort = std::hash<unsigned short> {}(value->decimal);
-    return combineHash(hashLong, hashShort);
-}
 //------------------------------------------------------------     
 BlockChain::~BlockChain() {
 
