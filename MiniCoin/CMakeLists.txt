@@ -3,11 +3,15 @@ project(MiniCoin CXX)
 
 include(CheckIncludeFileCXX)
 
+# ---------------------------------------------------------------------
+# DETECTAR SUPORTE DE LINGUAGEM
+# ---------------------------------------------------------------------
 check_include_file_cxx(any HAS_ANY)
 check_include_file_cxx(string_view HAS_STRING_VIEW)
 check_include_file_cxx(coroutine HAS_COROUTINE)
+
 if (NOT "${CMAKE_CXX_STANDARD}" STREQUAL "")
-    # Do nothing
+    # Nada a fazer
 elseif (HAS_ANY AND HAS_STRING_VIEW AND HAS_COROUTINE)
     set(CMAKE_CXX_STANDARD 20)
 elseif (HAS_ANY AND HAS_STRING_VIEW)
@@ -19,57 +23,78 @@ endif ()
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_executable(${PROJECT_NAME} main.cc)
+# Forçar C++20
+set(CMAKE_CXX_STANDARD 20)
 
-# ##############################################################################
-# If you include the drogon source code locally in your project, use this method
-# to add drogon 
-# add_subdirectory(drogon) 
-# target_link_libraries(${PROJECT_NAME} PRIVATE drogon)
-#
-# and comment out the following lines
+# ---------------------------------------------------------------------
+# DEPENDÊNCIAS COMUNS
+# ---------------------------------------------------------------------
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(JSONCPP REQUIRED jsoncpp)
 find_package(Drogon CONFIG REQUIRED)
-target_link_libraries(${PROJECT_NAME} PRIVATE Drogon::Drogon)
+find_package(Trantor CONFIG REQUIRED)
+find_package(ixwebsocket REQUIRED)
 
-# ##############################################################################
+# ---------------------------------------------------------------------
+# SERVIDOR DROGON
+# ---------------------------------------------------------------------
+set(SERVER_TARGET miniCoin)
 
-if (CMAKE_CXX_STANDARD LESS 17)
-    message(FATAL_ERROR "c++17 or higher is required")
-elseif (CMAKE_CXX_STANDARD LESS 20)
-    message(STATUS "use c++17")
-else ()
-    message(STATUS "use c++20")
-endif ()
+add_executable(${SERVER_TARGET}
+    main.cc
+    controllers/BlockchainWebSocket.cc
+    models/BlockChain.cpp
+    models/Currency.cpp
+    models/Message.cpp
+)
+
+target_link_libraries(${SERVER_TARGET}
+    PRIVATE
+    Drogon::Drogon
+    Trantor::Trantor
+    ${JSONCPP_LIBRARIES}
+)
+
+target_include_directories(${SERVER_TARGET}
+    PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/models
+    ${JSONCPP_INCLUDE_DIRS}
+)
 
 aux_source_directory(controllers CTL_SRC)
 aux_source_directory(filters FILTER_SRC)
 aux_source_directory(plugins PLUGIN_SRC)
 aux_source_directory(models MODEL_SRC)
 
-drogon_create_views(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/views
-                    ${CMAKE_CURRENT_BINARY_DIR})
-# use the following line to create views with namespaces.
-# drogon_create_views(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/views
-#                     ${CMAKE_CURRENT_BINARY_DIR} TRUE)
-# use the following line to create views with namespace CHANGE_ME prefixed
-# and path namespaces.
-# drogon_create_views(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/views
-#                     ${CMAKE_CURRENT_BINARY_DIR} TRUE CHANGE_ME)
+drogon_create_views(${SERVER_TARGET}
+    ${CMAKE_CURRENT_SOURCE_DIR}/views
+    ${CMAKE_CURRENT_BINARY_DIR}
+)
 
-target_include_directories(${PROJECT_NAME}
-                           PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
-                                   ${CMAKE_CURRENT_SOURCE_DIR}/models)
-target_sources(${PROJECT_NAME}
-               PRIVATE
-               ${SRC_DIR}
-               ${CTL_SRC}
-               ${FILTER_SRC}
-               ${PLUGIN_SRC}
-               ${MODEL_SRC})
-# ##############################################################################
-# uncomment the following line for dynamically loading views 
-# set_property(TARGET ${PROJECT_NAME} PROPERTY ENABLE_EXPORTS ON)
+# ---------------------------------------------------------------------
+# CLIENTE COM IXWEBSOCKET
+# ---------------------------------------------------------------------
+set(CLIENT_TARGET clientCoin)
 
-# ##############################################################################
+add_executable(${CLIENT_TARGET}
+    client.cc
+    models/Message.cpp
+)
 
-add_subdirectory(test)
+target_link_libraries(${CLIENT_TARGET}
+    PRIVATE
+    ixwebsocket::ixwebsocket
+    Drogon::Drogon
+    Trantor::Trantor
+    ${JSONCPP_LIBRARIES}
+)
+
+target_include_directories(${CLIENT_TARGET}
+    PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/models
+    ${JSONCPP_INCLUDE_DIRS}
+)
+
+# -------------------------------------------

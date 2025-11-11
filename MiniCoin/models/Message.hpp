@@ -9,7 +9,7 @@ enum class Type {
     DEPOSIT,
     REFUSED,
     UNKNOWN
-}
+};
 
 class Message {
     private:
@@ -44,6 +44,6 @@ class Message {
         void setType(Type t);
 
 
-        static std::string typeToString(MessageType t);
-        static MessageType stringToType(const std::string &s);
+        static std::string typeToString(Type t);
+        static Type stringToType(const std::string &s);
 };

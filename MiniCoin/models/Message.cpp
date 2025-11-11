@@ -2,14 +2,17 @@
 #include <sstream>
 #include <stdexcept>
 
+//------------------------------------------------------------
 Message::Message() : type(Type::UNKNOWN) {}
 
+//------------------------------------------------------------
 Message::Message(const std::string &name,
                  const std::string &value,
                  const std::string comment,
                  Type type)
     : name(name), value(value), comment(comment), type(type) {}
 
+//------------------------------------------------------------
 Message::Message(const std::string &jsonStr)
 {
     Json::CharReaderBuilder builder;
@@ -28,6 +31,7 @@ Message::Message(const std::string &jsonStr)
     this->type = stringToType(root.get("type", "").asString());
 }
 
+//------------------------------------------------------------
 std::string Message::toString() const
 {
     Json::Value root;
@@ -41,6 +45,7 @@ std::string Message::toString() const
     return Json::writeString(writer, root);
 }
 
+//------------------------------------------------------------
 Json::Value Message::toJson() const
 {
     Json::Value root;
@@ -51,16 +56,19 @@ Json::Value Message::toJson() const
     return root;
 }
 
+//------------------------------------------------------------
 const std::string Message::getName() const { return this->name; }
 const std::string Message::getValue() const { return this->value; }
 const std::string Message::getComment() const { return this->comment; }
 Type Message::getType() const { return this->type; }
 
+//------------------------------------------------------------
 void Message::setName(const std::string &n) { this->name = n; }
 void Message::setValue(const std::string &v) { this->value = v; }
 void Message::setComment(const std::string &c) { this->comment = c; }
 void Message::setType(Type t) { this->type = t; }
 
+//------------------------------------------------------------
 std::string Message::typeToString(Type t)
 {
     switch (t)
@@ -68,11 +76,12 @@ std::string Message::typeToString(Type t)
     case Type::INIT: return "INIT";
     case Type::WITHDRAW: return "WITHDRAW";
     case Type::DEPOSIT: return "DEPOSIT";
-    case Type::ACK: return "REFUSED";
+    case Type::REFUSED: return "REFUSED";
     default: return "UNKNOWN";
     }
 }
 
+//------------------------------------------------------------
 Type Message::stringToType(const std::string &s)
 {
     if (s == "INIT") return Type::INIT;
@@ -81,3 +90,4 @@ Type Message::stringToType(const std::string &s)
     if (s == "REFUSED") return Type::REFUSED;
     return Type::UNKNOWN;
 }
+//------------------------------------------------------------
