@@ -3,21 +3,22 @@
 #include <atomic>
 #include "Message.hpp"
 
-int main() {
+int main()
+{
     ix::WebSocket ws;
     ws.setUrl("ws://127.0.0.1:5555/ws");
     std::cout << "Cliente inicializado" << std::endl;
 
     std::atomic<bool> connected(false);
 
-    ws.setOnMessageCallback([&connected](const ix::WebSocketMessagePtr& msg) {
+    ws.setOnMessageCallback([&connected](const ix::WebSocketMessagePtr &msg)
+                            {
         if (msg->type == ix::WebSocketMessageType::Open) {
             std::cout << "Conectado ao servidor Drogon!" << std::endl;
             connected = true;
         } else if (msg->type == ix::WebSocketMessageType::Message) {
             std::cout << "Servidor disse: " << msg->str << std::endl;
-        }
-    });
+        } });
 
     ws.start();
 
@@ -44,38 +45,54 @@ int main() {
         std::cout << "====================\n";
         std::cout << "Escolha uma opção: ";
 
-        int opcao;
-        std::cin >> opcao;
+        std::string opcaoStr;
+        std::getline(std::cin, opcaoStr);
 
-        switch (opcao) {
-            case 1: {
-                double valor;
-                std::cout << "Valor para depósito: ";
-                std::cin >> valor;
+        if (opcaoStr == "1")
+        {
+            std::cout << "Valor para depósito: ";
+            std::string valorStr;
+            std::getline(std::cin, valorStr);
 
+            try
+            {
+                double valor = std::stod(valorStr);
                 Message msg(name, std::to_string(valor), "", Type::DEPOSIT);
                 ws.sendText(msg.toString());
-                break;
             }
-            case 2: {
-                double valor;
-                std::cout << "Valor para retirada: ";
-                std::cin >> valor;
+            catch (...)
+            {
+                std::cout << "Valor inválido. Digite um número.\n";
+            }
+        }
+        else if (opcaoStr == "2")
+        {
+            std::cout << "Valor para retirada: ";
+            std::string valorStr;
+            std::getline(std::cin, valorStr);
 
+            try
+            {
+                double valor = std::stod(valorStr);
                 Message msg(name, std::to_string(valor), "", Type::WITHDRAW);
                 ws.sendText(msg.toString());
-                break;
             }
-            case 3:
-                std::cout << "Saindo...\n";
-                running = false;
-                break;
-            default:
-                std::cout << "Opção inválida! Tente novamente.\n";
+            catch (...)
+            {
+                std::cout << "Valor inválido. Digite um número.\n";
+            }
+        }
+        else if (opcaoStr == "3")
+        {
+            std::cout << "Saindo...\n";
+            running = false;
+        }
+        else
+        {
+            std::cout << "Opção inválida! Tente novamente.\n";
         }
     }
 
-    std::cin.get();
     ws.stop();
     return 0;
 }
