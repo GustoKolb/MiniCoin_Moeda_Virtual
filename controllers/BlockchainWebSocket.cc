@@ -5,17 +5,28 @@
 #include "Message.hpp"
 #include <iostream>
 #include "models/utils.hpp"
+#include "models/logger.hpp"
 
-void handleDeposit(const Message &msg, const WebSocketConnectionPtr &wsConnPtr) {
-    try {
+void handleDeposit(const Message &msg, const WebSocketConnectionPtr &wsConnPtr)
+{
+    try
+    {
         Currency value(std::stod(msg.getValue()));
-        try {
-            std::cout  << "[" << currentTime() << "]" << "[SERVER] " <<  " Novo depósito efetuado por cliente " << msg.getName() << std::endl ;
+        try
+        {
+            Logger::Log(std::format("Novo depósito efetuado por cliente {}", msg.getName()));
             BlockChain::get().depositValue(value);
-        } catch (const std::exception& e) {
+
+            Message msgBack("", "", "Depósito realizado com sucesso!", Type::SUCCESS);
+            wsConnPtr->send(msgBack.toString());
+        }
+        catch (const std::exception &e)
+        {
             std::cerr << e.what() << std::endl;
         }
-    } catch(const std::exception& e) {
+    }
+    catch (const std::exception &e)
+    {
         std::cerr << e.what() << std::endl;
         std::string comment = e.what();
         Message msgBack("", "", comment, Type::REFUSED);
@@ -24,41 +35,58 @@ void handleDeposit(const Message &msg, const WebSocketConnectionPtr &wsConnPtr) 
 }
 
 //------------------------------------------------------------
-void handleWithdraw(const Message &msg, const WebSocketConnectionPtr &wsConnPtr) {
-    try {
+void handleWithdraw(const Message &msg, const WebSocketConnectionPtr &wsConnPtr)
+{
+    try
+    {
         Currency value(std::stod(msg.getValue()));
-        std::cout  << "[" << currentTime() << "]" << "[SERVER]" << " Nova tentativa de retirada efetuada por cliente " << msg.getName() << " de valor " << value.getCurrency() << std::endl ;
-        try {
+        Logger::Log(std::format("Nova tentativa de retirada efetuada por cliente {} de valor {}", msg.getName(), value.getCurrency()));
+        try
+        {
             bool check = BlockChain::get().withdrawValue(value);
-            if(!check) {
+            if (!check)
+            {
+                Logger::Log(std::format("Falha em retirada de valor {}", value.getCurrency()));
+                
                 std::ostringstream oss;
-                oss <<  " Falha em retirada " << " de valor " << value.getCurrency() << ", Saldo Disponível: " << BlockChain::get().getBalance().getCurrency();
-                std::cout << oss.str() << std::endl;
+                oss << "Falha em retirada " << " de valor " << value.getCurrency() << ", Saldo Disponível: " << BlockChain::get().getBalance().getCurrency();
                 Message msgBack("", "", oss.str(), Type::REFUSED);
                 wsConnPtr->send(msgBack.toString());
             }
-        } catch(const std::exception& e) {
+            else
+            {
+                Logger::Log(std::format("Sucesso em retirada de valor {}", value.getCurrency()));
+                Message msgBack("", "", "Retirada realizada com sucesso!", Type::SUCCESS);
+                wsConnPtr->send(msgBack.toString());
+            }
+        }
+        catch (const std::exception &e)
+        {
             std::cerr << e.what() << std::endl;
         }
-        
-    } catch(const std::exception& e) {
+    }
+    catch (const std::exception &e)
+    {
         std::cerr << e.what() << std::endl;
         std::string comment = e.what();
         Message msgBack("", "", comment, Type::REFUSED);
         wsConnPtr->send(msgBack.toString());
-        
     }
 }
 
 //------------------------------------------------------------
-void handleInit(const Message &msg, const WebSocketConnectionPtr &wsConnPtr) {
-    try {
+void handleInit(const Message &msg, const WebSocketConnectionPtr &wsConnPtr)
+{
+    try
+    {
         Currency value(std::stod(msg.getValue()));
         BlockChain::init(msg.getName(), value);
-        std::cout  << "[" << currentTime() << "]" << "[SERVER]" << "Nova BlockChain criada." << std::endl;
+        Logger::Log("Nova blockchain criada.");
         BlockChain::get().printHead();
-        //Pseudo-log 
-    } catch(const std::exception& e) {
+        // Pseudo-log
+    }
+    catch (const std::exception &e)
+    {
         std::cerr << e.what() << std::endl;
     }
 }
@@ -67,27 +95,37 @@ void handleInit(const Message &msg, const WebSocketConnectionPtr &wsConnPtr) {
 void BlockchainWebSocket::handleNewMessage(const WebSocketConnectionPtr &wsConnPtr, std::string &&message, const WebSocketMessageType &type)
 {
 
-    try {
+    try
+    {
         Message msg(message);
-        switch(msg.getType()) {
-            case Type::DEPOSIT: handleDeposit(msg, wsConnPtr); break;
-            case Type::WITHDRAW: handleWithdraw(msg, wsConnPtr); break;
-            case Type::INIT: handleInit(msg, wsConnPtr); break;
-            default: std::cout  << "[" << currentTime() << "]" << "[SERVER]" << "[ERROR]" << " Tipo de Mensagem Desconhecida" << std::endl;
+        switch (msg.getType())
+        {
+        case Type::DEPOSIT:
+            handleDeposit(msg, wsConnPtr);
+            break;
+        case Type::WITHDRAW:
+            handleWithdraw(msg, wsConnPtr);
+            break;
+        case Type::INIT:
+            handleInit(msg, wsConnPtr);
+            break;
+        default:
+            Logger::Log("[ERROR] Tipo de Mensagem Desconhecida");
         }
-    } catch (const std::exception& e) {}
+    }
+    catch (const std::exception &e)
+    {
+    }
 }
 //------------------------------------------------------------
 void BlockchainWebSocket::handleNewConnection(const HttpRequestPtr &req, const WebSocketConnectionPtr &wsConnPtr)
 {
-    std::cout  << "[" << currentTime() << "]" << "[SERVER] " << "Cliente conectado!" << std::endl;
+    Logger::Log("Cliente conectado!");
 }
 //------------------------------------------------------------
 void BlockchainWebSocket::handleConnectionClosed(const WebSocketConnectionPtr &wsConnPtr)
 {
-    std::cout  << "[" << currentTime() << "]" << "[SERVER] " << "Cliente desconectado!" << std::endl;
+    Logger::Log("Cliente desconectado!");
 }
 
 //------------------------------------------------------------
-
-

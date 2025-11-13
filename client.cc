@@ -4,18 +4,18 @@
 #include <atomic>
 #include "Message.hpp"
 
-bool checkValidDouble(double x) {
+bool checkValidDouble(double x)
+{
     double rounded = std::round(x * 100.0) / 100.0;
     return std::fabs(x - rounded) < 1e-9;
 }
 //----------------------------------------------------------------------------------
-bool checkValidValue(double value) {
+bool checkValidValue(double value)
+{
     return (value >= 0 && checkValidDouble(value));
 }
 
-
 //----------------------------------------------------------------------------------
-
 
 int main()
 {
@@ -44,13 +44,13 @@ int main()
     double value;
     std::cout << "Digite seu Nome: ";
     std::cin >> name;
-    std::cout << "Faça um Depósito Inicial: " ;
-    std::cin >>value;
-    while (value < 0){
+    std::cout << "Faça um Depósito Inicial: ";
+    std::cin >> value;
+    while (value < 0)
+    {
         std::cout << "Número Negativo" << std::endl;
         std::cout << "Tente Novamente: ";
         std::cin >> value;
-
     }
 
     Message msg(name, std::to_string(value), "", Type::INIT);
@@ -81,6 +81,7 @@ int main()
                 double valor = std::stod(valorStr);
                 Message msg(name, std::to_string(valor), "", Type::DEPOSIT);
                 ws.sendText(msg.toString());
+                std::this_thread::sleep_for(std::chrono::milliseconds(500)); // espera resposta servidor para print do menu
             }
             catch (...)
             {
@@ -98,6 +99,7 @@ int main()
                 double valor = std::stod(valorStr);
                 Message msg(name, std::to_string(valor), "", Type::WITHDRAW);
                 ws.sendText(msg.toString());
+                std::this_thread::sleep_for(std::chrono::milliseconds(500)); // espera resposta servidor para print do menu
             }
             catch (...)
             {

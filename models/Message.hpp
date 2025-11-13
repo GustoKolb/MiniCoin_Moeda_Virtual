@@ -8,6 +8,7 @@ enum class Type {
     WITHDRAW,
     DEPOSIT,
     REFUSED,
+    SUCCESS,
     UNKNOWN
 };
 

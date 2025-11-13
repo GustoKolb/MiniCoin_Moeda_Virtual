@@ -1,5 +1,5 @@
-#ifndef TIMEUTILS_HPP
-#define TIMEUTILS_HPP
+#ifndef UTILS_HPP
+#define UTILS_HPP
 
 #include <string>
 #include <chrono>
@@ -17,4 +17,4 @@ inline std::string currentTime(const std::string& format = "%Y-%m-%d %H:%M:%S") 
     return oss.str();
 }
 
-#endif // TIMEUTILS_HPP
+#endif // UTILS_HPP
