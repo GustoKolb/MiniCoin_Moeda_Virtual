@@ -37,11 +37,14 @@ class BlockChain {//Singleton
         ~BlockChain();
         void depositValue(Currency value);
         bool withdrawValue(Currency value);
+        Currency getBalance();
         void printChain();
+        void printHead();
         std::string getName();
         
     
     private:
+        void printTransaction(Block* b);
         static std::unique_ptr<BlockChain> instance;
         BlockChain(std::string name, Currency value);
         FirstBlock* head;

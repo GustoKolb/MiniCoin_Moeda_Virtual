@@ -79,9 +79,9 @@ Block* BlockChain::createBlock(Currency value) {
 std::string BlockChain::getName() {
     return this->head->name;
 }
-//------------------------------------------------------------
-bool BlockChain::checkWithdrawal(Currency value){
-
+//--------------------------------------------
+Currency BlockChain::getBalance() {
+    
     Currency account_value;
     account_value.number = head->value.number;
     Block* aux = this->head->next;
@@ -90,9 +90,11 @@ bool BlockChain::checkWithdrawal(Currency value){
         account_value.number += aux->value.number;
         aux = aux->next;
     }
-    if (account_value.number < value.number) 
-        return false;
-    return true;
+    return account_value;
+}
+//------------------------------------------------------------     
+bool BlockChain::checkWithdrawal(Currency value){
+    return (getBalance().number >= value.number);
 }
 
 //------------------------------------------------------------     
@@ -103,6 +105,12 @@ void BlockChain::depositValue(Currency value){
         return;
     }
     createBlock(value);
+    Block* aux = this->head->next;
+    while (aux->next){
+        aux = aux->next;
+    }
+    if (aux)
+        printTransaction(aux);
 }
 
 
@@ -117,27 +125,46 @@ bool BlockChain::withdrawValue(Currency value){
     if (checkWithdrawal(value)) {
         value.number = -value.number;
         createBlock(value);
+        Block* aux = this->head->next;
+        while (aux->next){
+            aux = aux->next;
+        }
+        if (aux)
+            printTransaction(aux);
+
         return true;
     }     
     return false;
 }
 
 //------------------------------------------------------------     
-void BlockChain::printChain() {
-    
-    Block* aux = this->head->next;
+void BlockChain::printHead() {
+
     if (this->head) {
         std::cout << "Dono da Conta: " << this->head->name << "\n";
         std::cout << "Data de criação: " << asctime(&this->head->datetime);
         std::cout << "Valor: " << this->head->value.getCurrency() << "\n";
         std::cout << "Hash: " << this->head->hash << "\n\n";
-        
-        while (aux){
-            std::cout << "Valor: " << aux->value.getCurrency() << "\n";
-            std::cout << "Hash: " << aux->hash << "\n\n";
-            aux = aux->next;
-        }
     }
+
+}
+//------------------------------------------------------------     
+void BlockChain::printTransaction(Block* b) {
+
+    std::cout << "Transação: " << b->value.getCurrency() << "\n";
+    std::cout << "Hash: " << b->hash << "\n\n";
+        
+}
+//------------------------------------------------------------     
+void BlockChain::printChain() {
+    
+    printHead();
+    Block* aux = this->head->next;
+       
+        while (aux){
+            printTransaction(aux);
+           aux = aux->next;
+        }
 }
 
 

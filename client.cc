@@ -1,7 +1,21 @@
 #include <iostream>
+#include <cmath>
 #include <ixwebsocket/IXWebSocket.h>
 #include <atomic>
 #include "Message.hpp"
+
+bool checkValidDouble(double x) {
+    double rounded = std::round(x * 100.0) / 100.0;
+    return std::fabs(x - rounded) < 1e-9;
+}
+//----------------------------------------------------------------------------------
+bool checkValidValue(double value) {
+    return (value >= 0 && checkValidDouble(value));
+}
+
+
+//----------------------------------------------------------------------------------
+
 
 int main()
 {
@@ -17,23 +31,31 @@ int main()
             std::cout << "Conectado ao servidor Drogon!" << std::endl;
             connected = true;
         } else if (msg->type == ix::WebSocketMessageType::Message) {
-            std::cout << "Servidor disse: " << msg->str << std::endl;
+            Message message(msg->str);
+            std::cout << message.getComment() << std::endl;
         } });
 
     ws.start();
 
-    // Esperar conexão antes de continuar
     while (!connected)
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
 
-    // Agora é seguro interagir
     std::string name;
     double value;
     std::cout << "Digite seu Nome: ";
     std::cin >> name;
+    std::cout << "Faça um Depósito Inicial: " ;
+    std::cin >>value;
+    while (value < 0){
+        std::cout << "Número Negativo" << std::endl;
+        std::cout << "Tente Novamente: ";
+        std::cin >> value;
 
-    Message msg(name, std::to_string(0), "", Type::INIT);
+    }
+
+    Message msg(name, std::to_string(value), "", Type::INIT);
     ws.sendText(msg.toString());
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     bool running = true;
     while (running)
