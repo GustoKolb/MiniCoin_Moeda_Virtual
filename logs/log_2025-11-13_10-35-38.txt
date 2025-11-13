@@ -1,0 +1,46 @@
+[2025-11-13 10:35:38] [SERVER] Deploy de servidor, escutando em porta 5555
+[2025-11-13 10:35:39] [SERVER] Cliente conectado!
+[2025-11-13 10:35:43] [SERVER] Nova Blockchain Criada
+
+[2025-11-13 10:35:43] [SERVER] 
+Dono da Conta: Augusto
+Data de criação: Thu Nov 13 10:35:43 2025
+Valor: 120
+Hash: 4774820206643356664
+
+[2025-11-13 10:35:49] [SERVER] Novo depósito efetuado por cliente Augusto
+[2025-11-13 10:35:49] [SERVER] 
+Transação: 300
+Hash: 16372517866058282527
+
+[2025-11-13 10:36:04] [SERVER] Nova tentativa de retirada efetuada por cliente Augusto de valor 500
+[2025-11-13 10:36:04] [SERVER] Falha em retirada de valor 500
+
+[2025-11-13 10:36:22] [SERVER] Nova tentativa de retirada efetuada por cliente Augusto de valor 400
+[2025-11-13 10:36:22] [SERVER] 
+Transação: -400
+Hash: 16551741902951453919
+
+[2025-11-13 10:36:37] [SERVER] Nova tentativa de retirada efetuada por cliente Augusto de valor 20.5
+[2025-11-13 10:36:37] [SERVER] Falha em retirada de valor 20.5
+
+[2025-11-13 10:36:44] [SERVER] Nova tentativa de retirada efetuada por cliente Augusto de valor 20
+[2025-11-13 10:36:44] [SERVER] 
+Transação: -20
+Hash: 4891141241534339647
+
+[2025-11-13 10:36:48] [SERVER] Novo depósito efetuado por cliente Augusto
+[2025-11-13 10:36:48] [SERVER] 
+Transação: 500
+Hash: 5389723166635678055
+
+[2025-11-13 10:36:52] [SERVER] Nova tentativa de retirada efetuada por cliente Augusto de valor 600
+[2025-11-13 10:36:52] [SERVER] Falha em retirada de valor 600
+
+[2025-11-13 10:36:57] [SERVER] Nova tentativa de retirada efetuada por cliente Augusto de valor 500
+[2025-11-13 10:36:57] [SERVER] 
+Transação: -500
+Hash: 10335786439459913701
+
+[2025-11-13 10:37:00] [SERVER] Cliente desconectado!
+[2025-11-13 10:37:03] [SERVER] Server desligado. Log salvo em logs/

@@ -1,0 +1,1 @@
+[2025-11-13 10:29:18] [SERVER] Deploy de servidor, escutando em porta 5555

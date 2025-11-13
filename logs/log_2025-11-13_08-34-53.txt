@@ -1,0 +1,14 @@
+[2025-11-13 08:34:53] [SERVER] Deploy de servidor, escutando em porta 5555
+[2025-11-13 08:34:55] [SERVER] Cliente conectado!
+[2025-11-13 08:35:00] [SERVER] Nova blockchain criada.
+[2025-11-13 08:35:26] [SERVER] Novo depósito efetuado por cliente A
+[2025-11-13 08:35:44] [SERVER] Nova tentativa de retirada efetuada por cliente A de valor 102
+[2025-11-13 08:35:44] [SERVER] Falha em retirada de valor 102
+[2025-11-13 08:36:01] [SERVER] Nova tentativa de retirada efetuada por cliente A de valor 100.5
+[2025-11-13 08:36:01] [SERVER] Sucesso em retirada de valor 100.5
+[2025-11-13 08:36:05] [SERVER] Nova tentativa de retirada efetuada por cliente A de valor 1
+[2025-11-13 08:36:05] [SERVER] Falha em retirada de valor 1
+[2025-11-13 08:36:12] [SERVER] Nova tentativa de retirada efetuada por cliente A de valor 0.5
+[2025-11-13 08:36:12] [SERVER] Sucesso em retirada de valor 0.5
+[2025-11-13 08:36:19] [SERVER] Cliente desconectado!
+[2025-11-13 08:36:24] [SERVER] Server desligado. Log salvo em logs/
