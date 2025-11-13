@@ -22,7 +22,7 @@ void handleDeposit(const Message &msg, const WebSocketConnectionPtr &wsConnPtr)
         }
         catch (const std::exception &e)
         {
-            std::cerr << e.what() << std::endl;
+            Logger::Log(e.what());
         }
     }
     catch (const std::exception &e)
@@ -47,7 +47,7 @@ void handleWithdraw(const Message &msg, const WebSocketConnectionPtr &wsConnPtr)
             if (!check)
             {
                 Logger::Log(std::format("Falha em retirada de valor {}", value.getCurrency()));
-                
+
                 std::ostringstream oss;
                 oss << "Falha em retirada " << " de valor " << value.getCurrency() << ", Saldo Disponível: " << BlockChain::get().getBalance().getCurrency();
                 Message msgBack("", "", oss.str(), Type::REFUSED);
@@ -62,7 +62,7 @@ void handleWithdraw(const Message &msg, const WebSocketConnectionPtr &wsConnPtr)
         }
         catch (const std::exception &e)
         {
-            std::cerr << e.what() << std::endl;
+            Logger::Log(e.what());
         }
     }
     catch (const std::exception &e)
