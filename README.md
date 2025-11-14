@@ -42,7 +42,7 @@ Quando o cliente inicia, é enviada uma mensagem do tipo `LOGGEDIN` para verific
 
 A partir disso, o cliente pode enviar mensagens do tipo `DEPOSIT` ou `WITHDRAW` para fazer depósitos ou saques, respectivamente — ao que o servidor pode responder com `SUCCESS` ou `REFUSED`, a depender da situação.
 
-![Classes](assets/Diagrama_Classes_Redes.drawio.png)
+![Classes](assets/Diagrama_Classes_Redes.png)
 
 ## Blockchain
 
