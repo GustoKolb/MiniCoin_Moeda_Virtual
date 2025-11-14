@@ -1,5 +1,5 @@
-// Autoria: Augusto Antonio Kolb Schiavini (GRR0232337) e João Eduardo Ambrosio
 
+//Autoria de Augusto Antonio Kolb Schiavini (GRR 20232337) e João Eduardo Zangari Ambrosio(GRR 20232344)|
 #include "BlockchainWebSocket.h"
 #include "models/BlockChain.hpp"
 #include "Message.hpp"
@@ -7,10 +7,18 @@
 #include "models/logger.hpp"
 #include <iostream>
 
+//handleDeposit
+//handleInit
+//handleWithdraw
+//handleLoggedIn
+//handleNewMessage
+//handleNewConnection
+//handleConnectionClosed
+
 
 void handleDeposit(const Message &msg, const WebSocketConnectionPtr &wsConnPtr)
 {
-    try
+    try //Testa se o Valor é valido
     {
         Currency value(std::stod(msg.getValue()));
         try
@@ -38,7 +46,7 @@ void handleDeposit(const Message &msg, const WebSocketConnectionPtr &wsConnPtr)
 //------------------------------------------------------------
 void handleWithdraw(const Message &msg, const WebSocketConnectionPtr &wsConnPtr)
 {
-    try
+    try //Testa se o Valor é válido 
     {
         Currency value(std::stod(msg.getValue()));
         Logger::Log(std::format("Nova tentativa de retirada efetuada por cliente {} de valor {}", msg.getName(), value.getCurrency()));
@@ -77,7 +85,7 @@ void handleWithdraw(const Message &msg, const WebSocketConnectionPtr &wsConnPtr)
 //------------------------------------------------------------
 void handleInit(const Message &msg, const WebSocketConnectionPtr &wsConnPtr)
 {
-    try
+    try //Inicia a BlockChain
     {
         Currency value(std::stod(msg.getValue()));
         BlockChain::init(msg.getName(), value);
@@ -93,7 +101,7 @@ void handleInit(const Message &msg, const WebSocketConnectionPtr &wsConnPtr)
 //------------------------------------------------------------
 void handleLoggedIn(const Message &msg, const WebSocketConnectionPtr &wsConnPtr)
 {
-    try
+    try //Testa se a BlockChain já existe, i.e, se o cliente já criou a conta antes
     {
         BlockChain::get();
         Message msgBack("", "", "", Type::LOGGEDIN);

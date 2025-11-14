@@ -1,3 +1,5 @@
+
+//Autoria de Augusto Antonio Kolb Schiavini (GRR 20232337) e João Eduardo Zangari Ambrosio(GRR 20232344)|
 #ifndef BLOCKCHAIN_HPP
 #define BLOCKCHAIN_HPP
 #include "Currency.hpp"
@@ -36,6 +38,7 @@ class BlockChain {//Singleton
         static void init( std::string name, Currency value);
         static BlockChain& get();
         ~BlockChain();
+
         void depositValue(Currency value);
         bool withdrawValue(Currency value);
         Currency getBalance();
@@ -45,14 +48,13 @@ class BlockChain {//Singleton
         
     
     private:
-        void printTransaction(Block* b);
-        static std::unique_ptr<BlockChain> instance;
-        BlockChain(std::string name, Currency value);
         FirstBlock* head;
+        static std::unique_ptr<BlockChain> instance;
+
+        BlockChain(std::string name, Currency value);
         Block* createBlock(Currency value); 
         bool checkWithdrawal(Currency value); 
         size_t combineHash(size_t h1, size_t h2);
-        size_t createCurrencyHash(Currency* value);
 };
 
 

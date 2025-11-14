@@ -1,6 +1,23 @@
+
+//Autoria de Augusto Antonio Kolb Schiavini (GRR 20232337) e João Eduardo Zangari Ambrosio(GRR 20232344)|
 #include <iostream>
 #include "BlockChain.hpp"
 std::unique_ptr<BlockChain> BlockChain::instance = nullptr;
+
+//BlockChain::init
+//BlockChain::get
+//BlockChain
+//BlockChain::createBlock
+//BlockChain::getName
+//BlockChain::getBalance
+//BlockChain::checkWithdrawal
+//BlockChain::withdrawValue
+//BlockChain::depositValue
+//BlockChain::printHead
+//BlockChain::printChain
+//BlockChain::combineHash
+//~BlockChain
+
 //------------------------------------------------------------
 void BlockChain::init(std::string name,Currency value){
     if (instance) {
@@ -81,7 +98,8 @@ std::string BlockChain::getName() {
 }
 //------------------------------------------------------------
 Currency BlockChain::getBalance() {
-    
+ 
+    //Percorre a BlockChain e obtém o saldo
     Currency account_value;
     account_value.number = head->value.number;
     Block* aux = this->head->next;
@@ -112,8 +130,6 @@ void BlockChain::depositValue(Currency value){
     if (aux)
         Logger::Log(std::format("\nTransação: {}\nHash: {}\n", aux->value.getCurrency(), aux->hash));
 }
-
-
 
 //------------------------------------------------------------     
 bool BlockChain::withdrawValue(Currency value){
@@ -159,9 +175,9 @@ void BlockChain::printChain() {
         }
 }
 
-
 //------------------------------------------------------------
-size_t BlockChain::combineHash(size_t h1, size_t h2) {
+size_t BlockChain::combineHash(size_t h1, size_t h2) {  
+    // Técnica de boost::hash_combine, criada por Bob Jenkins.
     return h1 ^ (h2 + 0x9e3779b9 + (h1 << 6) + (h1 >> 2));
 }
        

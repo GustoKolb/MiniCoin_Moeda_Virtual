@@ -1,0 +1,51 @@
+[2025-11-14 08:49:30] [SERVER] Deploy de servidor, escutando em porta 5555
+[2025-11-14 08:49:32] [SERVER] Cliente conectado!
+[2025-11-14 08:49:38] [SERVER] Nova Blockchain Criada
+
+[2025-11-14 08:49:38] [SERVER] 
+Dono da Conta: Augusto
+Data de criação: Fri Nov 14 08:49:38 2025
+Valor: 100
+Hash: 4774820206332557661
+
+[2025-11-14 08:49:44] [SERVER] Novo depósito efetuado por cliente Augusto
+[2025-11-14 08:49:44] [SERVER] 
+Transação: 25.5
+Hash: 16372517894710792219
+
+[2025-11-14 08:50:29] [SERVER] Nova tentativa de retirada efetuada por cliente Augusto de valor 75.5
+[2025-11-14 08:50:29] [SERVER] 
+Transação: -75.5
+Hash: 16551739337036764954
+
+[2025-11-14 08:50:35] [SERVER] Nova tentativa de retirada efetuada por cliente Augusto de valor 200
+[2025-11-14 08:50:35] [SERVER] Falha em retirada de valor 200
+
+[2025-11-14 08:50:46] [SERVER] Nova tentativa de retirada efetuada por cliente Augusto de valor 50.1
+[2025-11-14 08:50:46] [SERVER] Falha em retirada de valor 50.1
+
+[2025-11-14 08:50:55] [SERVER] Nova tentativa de retirada efetuada por cliente Augusto de valor 50
+[2025-11-14 08:50:55] [SERVER] 
+Transação: -50
+Hash: 4891229773213631853
+
+[2025-11-14 08:51:00] [SERVER] Novo depósito efetuado por cliente Augusto
+[2025-11-14 08:51:00] [SERVER] 
+Transação: 20
+Hash: 5377314910966446921
+
+[2025-11-14 08:51:02] [SERVER] Cliente desconectado!
+[2025-11-14 08:51:05] [SERVER] Cliente conectado!
+[2025-11-14 08:51:14] [SERVER] Nova tentativa de retirada efetuada por cliente  de valor 30
+[2025-11-14 08:51:14] [SERVER] Falha em retirada de valor 30
+
+[2025-11-14 08:51:21] [SERVER] Nova tentativa de retirada efetuada por cliente  de valor 20
+[2025-11-14 08:51:21] [SERVER] 
+Transação: -20
+Hash: 17297149391199173042
+
+[2025-11-14 08:51:23] [SERVER] Nova tentativa de retirada efetuada por cliente  de valor 1
+[2025-11-14 08:51:23] [SERVER] Falha em retirada de valor 1
+
+[2025-11-14 08:51:25] [SERVER] Cliente desconectado!
+[2025-11-14 08:51:28] [SERVER] Server desligado. Log salvo em logs/

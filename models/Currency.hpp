@@ -1,9 +1,11 @@
+
+//Autoria de Augusto Antonio Kolb Schiavini (GRR 20232337) e João Eduardo Zangari Ambrosio(GRR 20232344)|
 #ifndef CURRENCY_HPP
 #define CURRENCY_HPP
 
 #include <string>
 
-class Currency {
+class Currency { //Classe criada para evitar uso de ponto flutuante. Transforma Double em Long
     public:
 
         static constexpr unsigned short DEFAULT_DECIMAL = 2;

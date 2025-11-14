@@ -1,3 +1,5 @@
+
+//Autoria de Augusto Antonio Kolb Schiavini (GRR 20232337) e João Eduardo Zangari Ambrosio(GRR 20232344)|
 #ifndef LOGGER_H
 #define LOGGER_H
 
@@ -11,7 +13,7 @@
 #include <mutex>
 #include "utils.hpp"
 
-class Logger {
+class Logger { 
 public:
 
     Logger() = delete;

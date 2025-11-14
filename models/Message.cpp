@@ -1,7 +1,22 @@
+
+//Autoria de Augusto Antonio Kolb Schiavini (GRR 20232337) e João Eduardo Zangari Ambrosio(GRR 20232344)|
 #include "Message.hpp"
 #include <sstream>
 #include <stdexcept>
 
+//Message::Message
+//Message::toJson
+//Message::toString
+//Message::getName
+//Message::getType
+//Message::getValue
+//Message::getComment
+//Message::setName
+//Message::setType
+//Message::setValue
+//Message::setComment
+//Message::typeToString
+//Message::stringToType
 //------------------------------------------------------------
 Message::Message() : type(Type::UNKNOWN) {}
 

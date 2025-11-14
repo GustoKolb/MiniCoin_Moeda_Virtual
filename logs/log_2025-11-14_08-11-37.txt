@@ -1,0 +1,19 @@
+[2025-11-14 08:11:37] [SERVER] Deploy de servidor, escutando em porta 5555
+[2025-11-14 08:11:40] [SERVER] Cliente conectado!
+[2025-11-14 08:11:44] [SERVER] Nova Blockchain Criada
+
+[2025-11-14 08:11:44] [SERVER] 
+Dono da Conta: Augusto
+Data de criação: Fri Nov 14 08:11:44 2025
+Valor: 10
+Hash: 4774820208399370311
+
+[2025-11-14 08:11:47] [SERVER] Novo depósito efetuado por cliente Augusto
+[2025-11-14 08:11:47] [SERVER] 
+Transação: 30
+Hash: 16372486419685957893
+
+[2025-11-14 08:12:06] [SERVER] Cliente desconectado!
+[2025-11-14 08:12:07] [SERVER] Cliente conectado!
+[2025-11-14 08:12:14] [SERVER] Cliente desconectado!
+[2025-11-14 08:12:16] [SERVER] Server desligado. Log salvo em logs/

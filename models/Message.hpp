@@ -1,4 +1,5 @@
 
+//Autoria de Augusto Antonio Kolb Schiavini (GRR 20232337) e João Eduardo Zangari Ambrosio(GRR 20232344)|
 #pragma once
 #include <drogon/drogon.h>
 #include <string>
@@ -13,7 +14,7 @@ enum class Type {
     UNKNOWN
 };
 
-class Message {
+class Message { //Drogon transporta apenas string. Essa classe transforma String em JSON e vice-versa
     private:
         std::string name;
         std::string value;

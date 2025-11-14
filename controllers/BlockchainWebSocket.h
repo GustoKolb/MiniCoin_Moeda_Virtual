@@ -1,4 +1,5 @@
-//EchoWebsock.h
+
+//Autoria de Augusto Antonio Kolb Schiavini (GRR 20232337) e João Eduardo Zangari Ambrosio(GRR 20232344)|
 #pragma once
 #include <drogon/WebSocketController.h>
 using namespace drogon;
@@ -14,7 +15,6 @@ public:
     virtual void handleConnectionClosed(const WebSocketConnectionPtr&)override;
 
     WS_PATH_LIST_BEGIN
-    //list path definitions here;
-    WS_PATH_ADD("/ws", Get);
+    WS_PATH_ADD("/ws", Get);//Nosso Caminho
     WS_PATH_LIST_END
 };

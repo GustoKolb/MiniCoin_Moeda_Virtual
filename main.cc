@@ -1,3 +1,6 @@
+
+//Autoria de Augusto Antonio Kolb Schiavini (GRR 20232337) e João Eduardo Zangari Ambrosio(GRR 20232344)|
+
 #include <drogon/drogon.h>
 #include <csignal>
 #include "models/utils.hpp"
@@ -11,11 +14,7 @@ int main()
     // Set HTTP listener address and port
     drogon::app().addListener("0.0.0.0", port);
 
-    // Load config file
-    // drogon::app().loadConfigFile("../config.json");
-    // drogon::app().loadConfigFile("../config.yaml");
-    // Run HTTP framework,the method will block in the internal event loop
-    Logger::Log(std::format("Deploy de servidor, escutando em porta {}", port));
+   Logger::Log(std::format("Deploy de servidor, escutando em porta {}", port));
 
     drogon::app().run();
 

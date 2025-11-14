@@ -1,3 +1,6 @@
+
+#Autoria de Augusto Antonio Kolb Schiavini (GRR 20232337) e João Eduardo Zangari Ambrosio(GRR 20232344)|
+
 cmake_minimum_required(VERSION 3.5)
 project(MiniCoin CXX)
 

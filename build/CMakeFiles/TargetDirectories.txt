@@ -1,4 +1,0 @@
-/home/augusto/code/MiniCoin_Moeda_Virtual/build/CMakeFiles/miniCoin.dir
-/home/augusto/code/MiniCoin_Moeda_Virtual/build/CMakeFiles/clientCoin.dir
-/home/augusto/code/MiniCoin_Moeda_Virtual/build/CMakeFiles/edit_cache.dir
-/home/augusto/code/MiniCoin_Moeda_Virtual/build/CMakeFiles/rebuild_cache.dir

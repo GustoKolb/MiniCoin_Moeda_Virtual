@@ -1,3 +1,6 @@
+
+//Autoria de Augusto Antonio Kolb Schiavini (GRR 20232337) e João Eduardo Zangari Ambrosio(GRR 20232344)|
+
 #include <iostream>
 #include <cmath>
 #include <ixwebsocket/IXWebSocket.h>
@@ -48,23 +51,28 @@ int main()
     std::atomic<bool> loggedIn(false);
     std::atomic<bool> valid(false);
 
-    ws.setOnMessageCallback([&connected, &loggedIn](const ix::WebSocketMessagePtr &msg)
+    ws.setOnMessageCallback([&connected, &loggedIn, &ws](const ix::WebSocketMessagePtr &msg)
                             {
         if (msg->type == ix::WebSocketMessageType::Open) {
             std::cout << "Conectado ao servidor Drogon!" << std::endl;
             connected = true;
-        }
-        else if (msg->type == ix::WebSocketMessageType::Message) {
+            Message msg("","","",Type::LOGGEDIN); //check se ja criou usuario
+            ws.send(msg.toString());
+            std::this_thread::sleep_for(std::chrono::milliseconds(100)); //espera resposta
+
+
+        } else if (msg->type == ix::WebSocketMessageType::Message) {
             Message message(msg->str);
 
-            if(message.getType() == Type::LOGGEDIN){
+            if(message.getType() == Type::LOGGEDIN && !loggedIn){
                 std::cout << "Cliente já criado! Reconectando...\n";
                 loggedIn = true;
             }
 
             std::cout << message.getComment() << std::endl;
         } });
-
+ 
+    
     ws.start();
 
     while (!connected)
@@ -74,11 +82,7 @@ int main()
     std::string valueStr;
     double value;
     
-    Message msg("","","",Type::LOGGEDIN); //check se ja criou usuario
-    ws.send(msg.toString());
     std::this_thread::sleep_for(std::chrono::milliseconds(100)); //espera resposta
-
-
     if (!loggedIn)
     {
         std::cout << "Digite seu Nome: ";
