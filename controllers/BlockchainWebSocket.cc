@@ -3,9 +3,10 @@
 #include "BlockchainWebSocket.h"
 #include "models/BlockChain.hpp"
 #include "Message.hpp"
-#include <iostream>
 #include "models/utils.hpp"
 #include "models/logger.hpp"
+#include <iostream>
+
 
 void handleDeposit(const Message &msg, const WebSocketConnectionPtr &wsConnPtr)
 {
@@ -46,7 +47,7 @@ void handleWithdraw(const Message &msg, const WebSocketConnectionPtr &wsConnPtr)
             bool check = BlockChain::get().withdrawValue(value);
             if (!check)
             {
-                Logger::Log(std::format("Falha em retirada de valor {}", value.getCurrency()));
+                Logger::Log(std::format("Falha em retirada de valor {}\n", value.getCurrency()));
 
                 std::ostringstream oss;
                 oss << "Falha em retirada " << " de valor " << value.getCurrency() << ", Saldo Disponível: " << BlockChain::get().getBalance().getCurrency();
@@ -55,7 +56,6 @@ void handleWithdraw(const Message &msg, const WebSocketConnectionPtr &wsConnPtr)
             }
             else
             {
-                Logger::Log(std::format("Sucesso em retirada de valor {}", value.getCurrency()));
                 Message msgBack("", "", "Retirada realizada com sucesso!", Type::SUCCESS);
                 wsConnPtr->send(msgBack.toString());
             }
@@ -81,9 +81,8 @@ void handleInit(const Message &msg, const WebSocketConnectionPtr &wsConnPtr)
     {
         Currency value(std::stod(msg.getValue()));
         BlockChain::init(msg.getName(), value);
-        Logger::Log("Nova blockchain criada.");
+        Logger::Log("Nova Blockchain Criada\n");
         BlockChain::get().printHead();
-        // Pseudo-log
     }
     catch (const std::exception &e)
     {

@@ -79,7 +79,7 @@ Block* BlockChain::createBlock(Currency value) {
 std::string BlockChain::getName() {
     return this->head->name;
 }
-//--------------------------------------------
+//------------------------------------------------------------
 Currency BlockChain::getBalance() {
     
     Currency account_value;
@@ -110,7 +110,7 @@ void BlockChain::depositValue(Currency value){
         aux = aux->next;
     }
     if (aux)
-        printTransaction(aux);
+        Logger::Log(std::format("\nTransação: {}\nHash: {}\n", aux->value.getCurrency(), aux->hash));
 }
 
 
@@ -130,7 +130,7 @@ bool BlockChain::withdrawValue(Currency value){
             aux = aux->next;
         }
         if (aux)
-            printTransaction(aux);
+            Logger::Log(std::format("\nTransação: {}\nHash: {}\n", aux->value.getCurrency(), aux->hash));
 
         return true;
     }     
@@ -140,21 +140,13 @@ bool BlockChain::withdrawValue(Currency value){
 //------------------------------------------------------------     
 void BlockChain::printHead() {
 
-    if (this->head) {
-        std::cout << "Dono da Conta: " << this->head->name << "\n";
-        std::cout << "Data de criação: " << asctime(&this->head->datetime);
-        std::cout << "Valor: " << this->head->value.getCurrency() << "\n";
-        std::cout << "Hash: " << this->head->hash << "\n\n";
-    }
+    if (this->head) 
+        Logger::Log(std::format("\nDono da Conta: {}\nData de criação: {}Valor: {}\nHash: {}\n",
+        this->head->name, asctime(&this->head->datetime), this->head->value.getCurrency(), this->head->hash));
+   
 
 }
-//------------------------------------------------------------     
-void BlockChain::printTransaction(Block* b) {
 
-    std::cout << "Transação: " << b->value.getCurrency() << "\n";
-    std::cout << "Hash: " << b->hash << "\n\n";
-        
-}
 //------------------------------------------------------------     
 void BlockChain::printChain() {
     
@@ -162,7 +154,7 @@ void BlockChain::printChain() {
     Block* aux = this->head->next;
        
         while (aux){
-            printTransaction(aux);
+            Logger::Log(std::format("\nTransação: {}\nHash: {}\n\n", aux->value.getCurrency(), aux->hash));
            aux = aux->next;
         }
 }

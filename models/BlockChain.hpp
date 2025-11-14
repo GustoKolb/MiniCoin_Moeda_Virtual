@@ -1,6 +1,7 @@
 #ifndef BLOCKCHAIN_HPP
 #define BLOCKCHAIN_HPP
 #include "Currency.hpp"
+#include "logger.hpp"
 #include <iostream>
 #include <string>
 #include <ctime>

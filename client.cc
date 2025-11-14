@@ -16,7 +16,28 @@ bool checkValidValue(double value)
 }
 
 //----------------------------------------------------------------------------------
+double inputDouble() {
+    
+    std::string input;
+    double value;
+    while (true) {
+        try {
+            std::getline(std::cin, input);
+            value = std::stod(input);
+            if (value >= 0) 
+                return value;
+            else 
+                std::cout << "Valor Negativo, Tente Novamente: ";
 
+        } catch (std::exception& e){
+            std::cout << "Valor Não Numérico, Tente Novamente: ";
+        }
+
+    }
+    return value;
+
+}
+//----------------------------------------------------------------------------------
 int main()
 {
     ix::WebSocket ws;
