@@ -1,0 +1,2 @@
+[2025-11-13 22:13:07] [SERVER] Deploy de servidor, escutando em porta 5555
+[2025-11-13 22:13:08] [SERVER] Server desligado. Log salvo em logs/

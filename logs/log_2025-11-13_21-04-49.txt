@@ -1,0 +1,5 @@
+[2025-11-13 21:04:49] [SERVER] Deploy de servidor, escutando em porta 5555
+[2025-11-13 21:04:51] [SERVER] Cliente conectado!
+[2025-11-13 21:04:54] [SERVER] Nova blockchain criada.
+[2025-11-13 21:04:57] [SERVER] Cliente desconectado!
+[2025-11-13 21:04:59] [SERVER] Server desligado. Log salvo em logs/

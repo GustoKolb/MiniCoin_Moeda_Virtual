@@ -1,0 +1,9 @@
+[2025-11-13 21:38:16] [SERVER] Deploy de servidor, escutando em porta 5555
+[2025-11-13 21:38:18] [SERVER] Cliente conectado!
+[2025-11-13 21:38:18] [SERVER] [ERROR] Tipo de Mensagem Desconhecida
+[2025-11-13 21:38:21] [SERVER] Nova blockchain criada.
+[2025-11-13 21:38:31] [SERVER] Cliente desconectado!
+[2025-11-13 21:38:32] [SERVER] Cliente conectado!
+[2025-11-13 21:38:32] [SERVER] [ERROR] Tipo de Mensagem Desconhecida
+[2025-11-13 21:38:37] [SERVER] Cliente desconectado!
+[2025-11-13 21:38:39] [SERVER] Server desligado. Log salvo em logs/

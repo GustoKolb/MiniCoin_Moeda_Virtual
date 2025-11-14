@@ -9,6 +9,7 @@ enum class Type {
     DEPOSIT,
     REFUSED,
     SUCCESS,
+    LOGGEDIN,
     UNKNOWN
 };
 

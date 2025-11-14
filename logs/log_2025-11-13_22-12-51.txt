@@ -1,0 +1,5 @@
+[2025-11-13 22:12:51] [SERVER] Deploy de servidor, escutando em porta 5555
+[2025-11-13 22:12:53] [SERVER] Cliente conectado!
+[2025-11-13 22:12:53] [SERVER] [ERROR] Tipo de Mensagem Desconhecida
+[2025-11-13 22:12:55] [SERVER] Cliente desconectado!
+[2025-11-13 22:12:57] [SERVER] Server desligado. Log salvo em logs/

@@ -92,6 +92,20 @@ void handleInit(const Message &msg, const WebSocketConnectionPtr &wsConnPtr)
 }
 
 //------------------------------------------------------------
+void handleLoggedIn(const Message &msg, const WebSocketConnectionPtr &wsConnPtr)
+{
+    try
+    {
+        BlockChain::get();
+        Message msgBack("", "", "", Type::LOGGEDIN);
+        wsConnPtr->send(msgBack.toString());
+    }
+    catch(...)
+    {
+    }
+}
+
+//------------------------------------------------------------
 void BlockchainWebSocket::handleNewMessage(const WebSocketConnectionPtr &wsConnPtr, std::string &&message, const WebSocketMessageType &type)
 {
 
@@ -109,8 +123,11 @@ void BlockchainWebSocket::handleNewMessage(const WebSocketConnectionPtr &wsConnP
         case Type::INIT:
             handleInit(msg, wsConnPtr);
             break;
+        case Type::LOGGEDIN:
+            handleLoggedIn(msg, wsConnPtr);
+            break;
         default:
-            Logger::Log("[ERROR] Tipo de Mensagem Desconhecida");
+            Logger::Log(std::format("[ERROR] Tipo de Mensagem Desconhecida: {}", message));
         }
     }
     catch (const std::exception &e)

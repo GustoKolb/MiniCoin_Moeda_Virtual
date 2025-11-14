@@ -1,0 +1,5 @@
+[2025-11-13 22:21:12] [SERVER] Deploy de servidor, escutando em porta 5555
+[2025-11-13 22:21:14] [SERVER] Cliente conectado!
+[2025-11-13 22:21:14] [SERVER] [ERROR] Tipo de Mensagem Desconhecida: {"comment":"","name":"","type":"LOGGEDIN","value":""}
+[2025-11-13 22:21:23] [SERVER] Cliente desconectado!
+[2025-11-13 22:21:24] [SERVER] Server desligado. Log salvo em logs/

@@ -24,14 +24,23 @@ int main()
     std::cout << "Cliente inicializado" << std::endl;
 
     std::atomic<bool> connected(false);
+    std::atomic<bool> loggedIn(false);
+    std::atomic<bool> valid(false);
 
-    ws.setOnMessageCallback([&connected](const ix::WebSocketMessagePtr &msg)
+    ws.setOnMessageCallback([&connected, &loggedIn](const ix::WebSocketMessagePtr &msg)
                             {
         if (msg->type == ix::WebSocketMessageType::Open) {
             std::cout << "Conectado ao servidor Drogon!" << std::endl;
             connected = true;
-        } else if (msg->type == ix::WebSocketMessageType::Message) {
+        }
+        else if (msg->type == ix::WebSocketMessageType::Message) {
             Message message(msg->str);
+
+            if(message.getType() == Type::LOGGEDIN){
+                std::cout << "Cliente já criado! Reconectando...\n";
+                loggedIn = true;
+            }
+
             std::cout << message.getComment() << std::endl;
         } });
 
@@ -41,21 +50,36 @@ int main()
         std::this_thread::sleep_for(std::chrono::milliseconds(50));
 
     std::string name;
+    std::string valueStr;
     double value;
-    std::cout << "Digite seu Nome: ";
-    std::cin >> name;
-    std::cout << "Faça um Depósito Inicial: ";
-    std::cin >> value;
-    while (value < 0)
-    {
-        std::cout << "Número Negativo" << std::endl;
-        std::cout << "Tente Novamente: ";
-        std::cin >> value;
-    }
+    
+    Message msg("","","",Type::LOGGEDIN); //check se ja criou usuario
+    ws.send(msg.toString());
+    std::this_thread::sleep_for(std::chrono::milliseconds(100)); //espera resposta
 
-    Message msg(name, std::to_string(value), "", Type::INIT);
-    ws.sendText(msg.toString());
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    if (!loggedIn)
+    {
+        std::cout << "Digite seu Nome: ";
+        std::getline(std::cin, name);
+        std::cout << "Faça um Depósito Inicial: ";
+        while (!valid)
+        {
+            std::getline(std::cin, valueStr);
+            try
+            {
+                value = std::stod(valueStr);
+                Message msg(name, std::to_string(value), "", Type::INIT);
+                ws.sendText(msg.toString());
+                valid = true;
+                loggedIn = true;
+            }
+            catch (...)
+            {
+                std::cout << "Valor inválido. Digite um número.\n";
+            }
+        }
+    }
 
     bool running = true;
     while (running)
@@ -73,13 +97,12 @@ int main()
         if (opcaoStr == "1")
         {
             std::cout << "Valor para depósito: ";
-            std::string valorStr;
-            std::getline(std::cin, valorStr);
+            std::getline(std::cin, valueStr);
 
             try
             {
-                double valor = std::stod(valorStr);
-                Message msg(name, std::to_string(valor), "", Type::DEPOSIT);
+                value = std::stod(valueStr);
+                Message msg(name, std::to_string(value), "", Type::DEPOSIT);
                 ws.sendText(msg.toString());
                 std::this_thread::sleep_for(std::chrono::milliseconds(500)); // espera resposta servidor para print do menu
             }

@@ -1,0 +1,28 @@
+[2025-11-13 22:25:49] [SERVER] Deploy de servidor, escutando em porta 5555
+[2025-11-13 22:25:53] [SERVER] Cliente conectado!
+[2025-11-13 22:25:58] [SERVER] Nova blockchain criada.
+[2025-11-13 22:26:06] [SERVER] Novo depósito efetuado por cliente adw
+[2025-11-13 22:26:10] [SERVER] Nova tentativa de retirada efetuada por cliente adw de valor 222
+[2025-11-13 22:26:10] [SERVER] Sucesso em retirada de valor 222
+[2025-11-13 22:26:18] [SERVER] Novo depósito efetuado por cliente adw
+[2025-11-13 22:26:20] [SERVER] Cliente desconectado!
+[2025-11-13 22:26:24] [SERVER] Cliente conectado!
+[2025-11-13 22:26:29] [SERVER] Novo depósito efetuado por cliente 
+[2025-11-13 22:26:35] [SERVER] Nova tentativa de retirada efetuada por cliente  de valor 242
+[2025-11-13 22:26:35] [SERVER] Sucesso em retirada de valor 242
+[2025-11-13 22:26:41] [SERVER] Nova tentativa de retirada efetuada por cliente  de valor 666
+[2025-11-13 22:26:41] [SERVER] Sucesso em retirada de valor 666
+[2025-11-13 22:26:43] [SERVER] Nova tentativa de retirada efetuada por cliente  de valor 6666
+[2025-11-13 22:26:43] [SERVER] Falha em retirada de valor 6666
+[2025-11-13 22:26:49] [SERVER] Cliente desconectado!
+[2025-11-13 22:26:50] [SERVER] Cliente conectado!
+[2025-11-13 22:26:53] [SERVER] Nova tentativa de retirada efetuada por cliente  de valor 5555
+[2025-11-13 22:26:53] [SERVER] Falha em retirada de valor 5555
+[2025-11-13 22:26:55] [SERVER] Cliente desconectado!
+[2025-11-13 22:26:58] [SERVER] Cliente conectado!
+[2025-11-13 22:27:02] [SERVER] Novo depósito efetuado por cliente 
+[2025-11-13 22:27:05] [SERVER] Novo depósito efetuado por cliente 
+[2025-11-13 22:27:07] [SERVER] Nova tentativa de retirada efetuada por cliente  de valor 222
+[2025-11-13 22:27:07] [SERVER] Sucesso em retirada de valor 222
+[2025-11-13 22:27:08] [SERVER] Cliente desconectado!
+[2025-11-13 22:27:10] [SERVER] Server desligado. Log salvo em logs/

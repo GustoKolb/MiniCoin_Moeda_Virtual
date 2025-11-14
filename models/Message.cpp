@@ -77,6 +77,7 @@ std::string Message::typeToString(Type t)
     case Type::WITHDRAW: return "WITHDRAW";
     case Type::DEPOSIT: return "DEPOSIT";
     case Type::REFUSED: return "REFUSED";
+    case Type::LOGGEDIN: return "LOGGEDIN";
     default: return "UNKNOWN";
     }
 }
@@ -88,6 +89,7 @@ Type Message::stringToType(const std::string &s)
     if (s == "WITHDRAW") return Type::WITHDRAW;
     if (s == "DEPOSIT") return Type::DEPOSIT;
     if (s == "REFUSED") return Type::REFUSED;
+    if (s == "LOGGEDIN") return Type::LOGGEDIN;
     return Type::UNKNOWN;
 }
 //------------------------------------------------------------
